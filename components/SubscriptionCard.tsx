@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { Image, Pressable, Text, View } from "react-native";
 import {
     formatCurrency,

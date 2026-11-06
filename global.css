@@ -301,6 +301,14 @@
     @apply rounded-2xl border border-border bg-background px-4 py-4 text-base font-sans-medium text-primary;
   }
 
+  .auth-input-wrap {
+    @apply flex-row items-center rounded-2xl border bg-background px-4;
+  }
+
+  .auth-input-control {
+    @apply min-h-14 min-w-0 flex-1 py-4 text-base font-sans-medium text-primary;
+  }
+
   .auth-input-error {
     @apply border-destructive;
   }
