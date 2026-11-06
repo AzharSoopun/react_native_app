@@ -17,7 +17,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.react_native_app"
     },
     "web": {
       "output": "server",
@@ -32,7 +33,23 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/assets/fonts/PlusJakartaSans-Regular.ttf",
+            "./assets/assets/fonts/PlusJakartaSans-Bold.ttf",
+            "./assets/assets/fonts/PlusJakartaSans-SemiBold.ttf",
+            "./assets/assets/fonts/PlusJakartaSans-Medium.ttf",
+            "./assets/assets/fonts/PlusJakartaSans-ExtraBold.ttf",
+            "./assets/assets/fonts/PlusJakartaSans-Light.ttf"
+          ]
+        }
+      ],
+      "expo-web-browser",
+      "@clerk/expo",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
