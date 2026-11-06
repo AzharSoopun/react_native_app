@@ -6,6 +6,7 @@ import { AuthButton, AuthError, AuthField, AuthFooterLink } from "../../../compo
 import { AuthScreen } from "../../../components/auth/AuthScreen";
 import { getClerkErrorMessage, getCodeError, getPasswordError, maskEmailAddress, validateEmail, type AuthFieldErrors } from "../../../lib/auth-validation";
 import { useResendCooldown } from "../../../lib/use-resend-cooldown";
+import { posthog } from "../../../lib/posthog";
 
 type FactorStrategy = "email_code" | "phone_code" | "totp" | "backup_code" | "passkey";
 type SignInStep =
@@ -58,6 +59,8 @@ export default function SignInScreen() {
           setFormError("Your sign-in needs one more account step before you can continue. Please contact support.");
           return;
         }
+        posthog?.logger.info("sign-in completed", { authentication_provider: "clerk" });
+        posthog?.capture("sign_in_completed");
         router.replace("/(tabs)");
       },
     });
@@ -315,6 +318,7 @@ export default function SignInScreen() {
         setFormError(getClerkErrorMessage(error, "We couldn’t update your password. Choose a different password and try again."));
         return;
       }
+      posthog?.capture("password_reset_completed");
       if (!(await finishIfComplete())) {
         setFormError("Your password was updated, but we couldn’t finish sign-in. Please sign in with your new password.");
       }

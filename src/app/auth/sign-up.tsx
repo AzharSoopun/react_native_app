@@ -6,6 +6,7 @@ import { AuthButton, AuthError, AuthField, AuthFooterLink } from "../../../compo
 import { AuthScreen } from "../../../components/auth/AuthScreen";
 import { getClerkErrorMessage, getCodeError, getPasswordError, maskEmailAddress, validateEmail, type AuthFieldErrors } from "../../../lib/auth-validation";
 import { useResendCooldown } from "../../../lib/use-resend-cooldown";
+import { posthog } from "../../../lib/posthog";
 
 type SignUpStep = "details" | "verify-email";
 
@@ -34,6 +35,8 @@ export default function SignUpScreen() {
           setFormError("Your account needs one more security step before it’s ready. Please try again or contact support.");
           return;
         }
+        posthog?.logger.info("account creation completed", { authentication_provider: "clerk" });
+        posthog?.capture("account_created");
         router.replace("/(tabs)");
       },
     });

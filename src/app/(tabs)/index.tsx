@@ -16,6 +16,7 @@ import { icons } from "../../../constants/icon";
 import images from "../../../constants/images";
 import "../../../global.css";
 import { formatCurrency } from "../../../lib/utils";
+import { posthog } from "../../../lib/posthog";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -76,9 +77,10 @@ export default function App() {
               {...item}
               expanded={expandedSubscriptionId === item.id}
               onPress={() =>
-                setExpandedSubscriptionId((currentId) =>
-                  currentId === item.id ? null : item.id,
-                )
+                setExpandedSubscriptionId((currentId) => {
+                  if (currentId !== item.id) posthog?.capture("subscription_details_viewed");
+                  return currentId === item.id ? null : item.id;
+                })
               }
             />
           )}

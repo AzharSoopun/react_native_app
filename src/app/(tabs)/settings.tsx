@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ActivityIndicator, Pressable, Text } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { AuthError } from "../../../components/auth/AuthField";
+import { posthog } from "../../../lib/posthog";
 const SafeAreaView = styled(RNSafeAreaView);
 const Settings = () => {
   const { signOut } = useClerk();
@@ -16,6 +17,9 @@ const Settings = () => {
     setError("");
     try {
       await signOut();
+      posthog?.logger.info("sign-out completed", { authentication_provider: "clerk" });
+      posthog?.capture("sign_out_completed");
+      posthog?.reset();
     } catch {
       setError("We couldn’t sign you out. Check your connection and try again.");
     } finally {
